@@ -28,16 +28,9 @@ abstract class HackerNewsBase implements Store {
 
   @action
   getNewsList() {
-    fetchNewsList().then((newsListObject) {
+    var newsListObject = await fetchNewsList();
       newsList = newsListObject.topStoryIndexes;
-      getNews(newsList, newsLimit).then((listOfArticles) {
-        List<News> listOfNews = news;
-        listOfArticles.forEach((newsArticle) {
-          listOfNews.add(newsArticle);
-        });
-        news = listOfNews;
-      });
-    });
+      news = await getNews(newsList, newsLimit);
   }
 }
 
